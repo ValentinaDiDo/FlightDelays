@@ -124,24 +124,23 @@ public class ExtFlightDelaysDAO {
 	}
 
 	public List<Rotta> getRotte(Map<Integer, Airport> idMap) {
+	
 		String sql = "SELECT f.ORIGIN_AIRPORT_ID as a1, f.DESTINATION_AIRPORT_ID as a2, COUNT(*) AS n "
 				+ "FROM flights f "
 				+ "GROUP BY f.ORIGIN_AIRPORT_ID, f.DESTINATION_AIRPORT_ID";
-		List<Rotta> result = new ArrayList<Rotta>();
+		List<Rotta> result = new ArrayList<Rotta> ();
 		
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
 			ResultSet rs = st.executeQuery();
 			
-			while(rs.next()) {
-				Airport sorgente = idMap.get(rs.getInt("a1"));
-				Airport destinazione = idMap.get(rs.getInt("a2"));
-				
-				if(sorgente != null && destinazione != null) {
-					result.add(new Rotta(sorgente, destinazione, rs.getInt("n")));
+			while (rs.next()) {
+				Airport a1 = idMap.get(rs.getInt("a1"));
+				Airport a2 = idMap.get(rs.getInt("a2"));
+				if(a1 != null && a2 != null) {
+					result.add(new Rotta(a1, a2, rs.getInt("n")));
 				}
-				
 			}
 			
 			conn.close();
@@ -151,10 +150,9 @@ public class ExtFlightDelaysDAO {
 			System.out.println("Errore connessione al database");
 			throw new RuntimeException("Error Connection Database");
 		}
-		
 	}
-	
-	
+
+		
 	
 	
 	

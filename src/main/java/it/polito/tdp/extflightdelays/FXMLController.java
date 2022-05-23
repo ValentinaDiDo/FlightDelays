@@ -44,21 +44,17 @@ public class FXMLController {
     @FXML
     void doAnalizzaAeroporti(ActionEvent event) {
     	txtResult.clear();
-    	
     	int x;
     	
     	try {
     		x = Integer.parseInt(compagnieMinimo.getText());
-    	} catch (NumberFormatException e) {
-    		txtResult.appendText("Inserire valore numerico");
+    	}catch(NumberFormatException e) {
+    		txtResult.appendText("inserire valore numerico");
     		return;
     	}
-    	
     	this.model.creaGrafo(x);
     	
-    	txtResult.appendText("# VERTICI: " + this.model.nVertici() + "\n");
-    	txtResult.appendText("# ARCHI: " + this.model.nArchi());
-    	
+    	//RIEMPIO LE TENDINE
     	cmbBoxAeroportoPartenza.getItems().addAll(this.model.getVertici());
     	cmbBoxAeroportoDestinazione.getItems().addAll(this.model.getVertici());
     }
